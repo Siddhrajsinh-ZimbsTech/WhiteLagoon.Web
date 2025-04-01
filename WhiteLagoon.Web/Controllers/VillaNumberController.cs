@@ -1,40 +1,49 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using WhiteLagoon.Domain.Entites;
 using WhiteLagoon.Infrastructure.Data;
+using WhiteLagoon.Web.ViewModels;
 
 namespace WhiteLagoon.Web.Controllers
 {
-    public class VillaController : Controller
+    public class VillaNumberController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public VillaController(ApplicationDbContext context)
+        public VillaNumberController(ApplicationDbContext context)
         {
             _context = context;
         }
         public IActionResult Index()
         {
-            var Villas = _context.Villas.ToList();
-            return View(Villas);
+            var villaNumbers = _context.VillaNumbers.Include(u=>u.Villa).ToList();
+            return View(villaNumbers);
         }
 
         public IActionResult Create()
         {
-            return View();
+            VillaNumberVM villaNumber = new()
+            {
+                VillaList = _context.Villas.ToList().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                })
+
+            };
+            return View(villaNumber);
         }
 
         [HttpPost]
-        public IActionResult Create(Villa obj)
+        public IActionResult Create(VillaNumber obj)
         {
-            if (obj.Name == obj.Description)
-            {
-                ModelState.AddModelError("Name", "The description cannot exactly match the Name. ");
-            }
+            ModelState.Remove("Villa");
             if (ModelState.IsValid)
             {
-                _context.Villas.Add(obj);
+                _context.VillaNumbers.Add(obj);
                 _context.SaveChanges();
-                TempData["success"] = "The villa has been created  successfully.";
+                TempData["success"] = "The villa Number has been created  successfully.";
                 return RedirectToAction("Index");
             }
             return View();
