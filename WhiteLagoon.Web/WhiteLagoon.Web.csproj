@@ -22,4 +22,12 @@
     <ProjectReference Include="..\WhiteLagoon.Infrastructure\WhiteLagoon.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\VillaImages\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="ViewModels\AmenityVM .cs" />
+  </ItemGroup>
+
 </Project>
