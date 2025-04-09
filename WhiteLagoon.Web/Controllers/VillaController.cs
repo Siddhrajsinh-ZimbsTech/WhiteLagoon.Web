@@ -47,7 +47,8 @@ namespace WhiteLagoon.Web.Controllers
 
 
 
-                obj.ImageUrl = @"\images\VillaImages\" + fileName;
+                obj.ImageUrl = "/images/VillaImages/" + fileName;
+
             }
             else
             {
@@ -97,7 +98,8 @@ namespace WhiteLagoon.Web.Controllers
 
                     using var fileStream = new FileStream(Path.Combine(imagePath, fileName), FileMode.Create);
                     obj.Image.CopyTo(fileStream);
-                     obj.ImageUrl = @"\images\VillaImages\" + fileName;
+                    obj.ImageUrl = "/images/VillaImages/" + fileName;
+
                 }
                 _unitOfWork.Villa.Update(obj);
                 _unitOfWork.save();
