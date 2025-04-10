@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using WhiteLagoon.Application.Common.Interfaces;
 using WhiteLagoon.Domain.Entites;
 using WhiteLagoon.Infrastructure.Data;
-
 namespace WhiteLagoon.Infrastructure.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
