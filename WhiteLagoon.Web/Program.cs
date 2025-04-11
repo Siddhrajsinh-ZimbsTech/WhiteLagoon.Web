@@ -6,9 +6,7 @@ using WhiteLagoon.Domain.Entites;
 using WhiteLagoon.Infrastructure.Data;
 using WhiteLagoon.Infrastructure.Repository;
 using Stripe;
-
-
-
+using Syncfusion.Licensing;
 internal class Program
 {
     private static void Main(string[] args)
@@ -30,8 +28,6 @@ internal class Program
             options.TokenLifespan = TimeSpan.FromHours(2); // 2 hours validity
         });
 
-
-
         builder.Services.ConfigureApplicationCookie(option =>
         {
             option.AccessDeniedPath = "/Account/AccessDenied";
@@ -45,13 +41,10 @@ internal class Program
 
         builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
-
-
-
-
-
         var app = builder.Build();
         StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
+
+        SyncfusionLicenseProvider.RegisterLicense(builder.Configuration.GetSection("Syncfusion:Licensekey").Get<string>());
 
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
